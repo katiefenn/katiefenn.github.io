@@ -1,0 +1,74 @@
+<html data-reactroot="" data-reactid="1" data-react-checksum="-420633364"><head data-reactid="2"><link href="https://fonts.googleapis.com/css?family=Lato:300,300i" rel="stylesheet" data-reactid="3"/><link rel="stylesheet" href="/assets/styles.css" data-reactid="4"/><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/5f3ee6fcdacac39bf058ce91486a9256.png" data-reactid="5"/><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/797414d3fed48ae487f725846fd7d9ce.png" data-reactid="6"/><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/8797f3ffa5c6d05e84c1566476827bda.png" data-reactid="7"/><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/8a4b26f9c023cea2d82b0335d278a181.png" data-reactid="8"/><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/9c334fc0089b97e3dafa42b8359c5100.png" data-reactid="9"/><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/63fbc377c195fa6ec88953f1634d16a5.png" data-reactid="10"/><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/a1e57357c9523878df3152aac35a2505.png" data-reactid="11"/><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/714b71cdd4ff75a68a876645dee7450e.png" data-reactid="12"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/d4483449b422b691be6aa882ba6e9bd1.png" data-reactid="13"/><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/0f0a306730b7b0ba56777996a5852e9b.png" data-reactid="14"/><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/44c9edf2ceed4f79fb9835eaa47fca63.png" data-reactid="15"/><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/2d94238307594d6066568fd29e0e4af0.png" data-reactid="16"/><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/0dcda9b7fa830ec49272fdfdfce6f622.png" data-reactid="17"/><link rel="manifest" href="/assets/manifest.json" data-reactid="18"/><meta name="msapplication-TileColor" content="#ffffff" data-reactid="19"/><meta name="msapplication-TileImage" content="/assets/img/a1e57357c9523878df3152aac35a2505.png" data-reactid="20"/><meta name="theme-color" content="#ffffff" data-reactid="21"/></head><body class="_body_1qay1_1" data-reactid="22"><header data-reactid="23"><h1 class="_main-heading_1qay1_177" data-reactid="24">Katie Fenn</h1></header><div class="_decoration_1qay1_26" data-reactid="25"><div class="_exhaust_1qay1_37" data-reactid="26"></div><div class="_mask_1qay1_99" data-reactid="27"></div><div class="_gradient_1qay1_117" data-reactid="28"></div><div class="_vapour_1qay1_79" data-reactid="29"></div><div class="_shuttle_1qay1_58" data-reactid="30"></div><div class="_large-plume_1qay1_139" data-reactid="31"></div><div class="_small-plume_1qay1_158" data-reactid="32"></div></div><div class="_content_1qay1_9" data-reactid="33"><div data-reactid="34"><article class="_article_1jkjk_1" data-reactroot="" data-reactid="1" data-react-checksum="1767051044"><h1 id="building-a-static-website-with-react">Building a static website with React</h1>
+<p><em>5th February 2017</em></p>
+<p>I have been using React to build sites for nearly two years. It&#39;s a valuable tool for making cutting-edge software with vibrant user experiences and I have grown used to using it. It&#39;s not normally the tool you would use for a small development blog, but how would you go about using it if you did?</p>
+<p>React is famous for introducing universally rendered JS components - HTML content rendered symmetrically on the server and in the browser. Rendering components only in the browser can be slow, and doing part of it on the server is a useful shortcut.</p>
+<pre><code>let output = ReactDOM.renderToString(
+  &lt;div&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+  &lt;/div&gt;
+);
+</code></pre><p>This makes React a useful HTML templating tool that we can use in the same role as Handlebars, Twig or Haml. React is remarkably relaxed about how and where you use it, and I want to take advantage of this as the basis of my super-modern static site generator.</p>
+<p>I also have an ulterior motive. Much has been said about using tools like React to make sophisticated &quot;single page apps&quot;. While it is true that React is a superb tool for this, there is a majority of developers who don&#39;t work on SPAs who really want to know what the latest tools can do for them.</p>
+<h2 id="gulp">Gulp</h2>
+<p>Before we get started with React, we need a static site generator to build our site around. The only one I&#39;ve used before is <a href="https://jekyllrb.com/">Jekyll</a>, which is a great tool for beginners but its prescriptive design doesn&#39;t give me any options to use my own tools. On the other hand, Gulp is designed especially for producing bespoke sites and its library of plugins allows me to replicate common static site features such as Markdown parsing.</p>
+<p><a href="https://www.npmjs.com/package/gulp-markdown">gulp-markdown</a> is used just for this purpose. It transforms markdown files into HTML, and is the first step in turning my articles into web pages.</p>
+<p>I use <a href="https://www.npmjs.com/package/gulp-rename">gulp-rename</a> to strip date prefixes from the folders that contain my articles. I also use it to rename the main article files to <code>index.html</code> to make requests to <code>article-name/index.html</code> load with a friendly URL like <code>www.katiefenn.co.uk/article-name/</code>.</p>
+<p><a href="https://www.npmjs.com/package/gulp-sort">gulp-sort</a> orders my articles so that they appear in my index files in reverse date order, using the date prefixes on the article directory names.</p>
+<p><a href="https://www.npmjs.com/package/gulp-filter">gulp-filter</a> is useful for making Gulp ignore other files stored with my articles, such as images and notes that I don&#39;t want to publish.</p>
+<p><a href="https://www.npmjs.com/package/gulp-replace">gulp-replace</a> is perfect for adding permalinks to article headings.</p>
+<p>These plugins are <em>almost</em> enough to make a basic static site work, all that&#39;s left is to inject the processed content into an HTML template to make it look nice. <a href="https://www.npmjs.com/package/gulp-filter">gulp-handlebars</a> is a good way of doing this normally, but this is where I start doing things differently.</p>
+<h2 id="custom-render-to-html-plugin">Custom render-to-html plugin</h2>
+<p>As far as I know, there are no Gulp plugins to render piped HTML content into React components (know better? <a href="http://twitter.com/katie_fenn">Let me know!</a>). The custom plugin I wrote for doing this takes HTML piped into it, creates a new instance of a React element with props from its arguments, and renders it to a string.</p>
+<pre><code>// Inject article content into site templates
+// (server-rendered React components)
+.pipe(jsxTemplate(PageIndex, {
+  pageCount: Math.ceil(articleCount / ARTICLES_PER_PAGE)
+}))
+.pipe(jsxTemplate(Page))
+</code></pre><p>Looking inside the source of the plugin, we can see that it encapsulates <code>ReactDom.renderToString</code>:</p>
+<pre><code>let contents = file.contents.toString(&quot;utf8&quot;);
+let output = ReactDOM.renderToString(
+  &lt;Component {...props}&gt;
+    { contents }
+  &lt;/Component&gt;
+);
+
+file.contents = new Buffer(output);
+</code></pre><p>There&#39;s just one part of the puzzle missing for making a working blog: paginated index pages.</p>
+<h2 id="custom-pagination-plugin">Custom pagination plugin</h2>
+<p>Navigation of articles on my site has always been through collating articles into numbered pages. It&#39;s a common method of navigating blog-like sites, and I am somewhat surprised that a Gulp plugin does not exist to do this.</p>
+<p>I created another custom Gulp plugin that holds files piped into it until the number of articles held reaches a configurable articles-per-page setting. It then creates a new file with content from each file it holds appended together.</p>
+<h2 id="css-modules-and-postcss">CSS Modules and PostCSS</h2>
+<p>CSS Modules is one of the most exciting new developments in the world of CSS. It is a suite of tools that protect styles from being freely overwritten. This helps reduce the problem of unexpected side-effects when making changes to a site&#39;s styles. It also compliments building a site with React, by placing a focus on reusable user interface components instead of reusable styles.</p>
+<p>CSS Modules is supported by both <a href="http://postcss.org/">PostCSS</a> and <a href="https://webpack.github.io/">WebPack</a>. I decided not to use WebPack because my site has few client-side assets that need bundling. PostCSS is ideal in this case, it can pre-process modular stylesheets for a static website and is easier to set up than WebPack.</p>
+<p>When PostCSS processes my stylesheets, it transforms classnames to make them unique. It&#39;s a similar process to the <a href="http://getbem.com/">BEM</a> naming convention in that it adds a postfix to classes to reduce the likelihood of style being overwritten. In order to use the new classnames in my React components, PostCSS creates a JSON file that maps the old classes to the new:</p>
+<pre><code>import React from &#39;react&#39;;
+const styles = require(&#39;./styles.css.json&#39;);
+
+export default function(props) {
+  return (
+    &lt;article className={ styles.article } /&gt;
+  );
+};
+</code></pre><p>The end result HTML looks like this:</p>
+<pre><code>&lt;article class=&quot;_article_1jkjk_1&quot;&gt;
+  &lt;h1&gt;Building a static website with React&lt;/h1&gt;
+  ...
+&lt;/article&gt;
+</code></pre><p>Gulp then concatenates stylesheets together into a single file to be served on the web.</p>
+<h2 id="automating-builds-and-deployment-with-travis-ci">Automating builds and deployment with Travis CI</h2>
+<p>One of the pain points of making a static website in the past was the manual process of generating and deploying the site whenever content changed. <a href="https://travis-ci.org/">Travis CI</a> once again proves an invaluable frontend development tool by doing this bit for me.</p>
+<p>My introduction to CI was a service than ran unit tests on my code whenever I pushed to GitHub. The sheer flexibility of modern CI services (such as Travis) allows them to do much more than this. Whenever I push a change to <a href="https://github.com/katiefenn/website-2017-src">my site&#39;s repository</a> on GitHub, Travis builds my site and deploys the <a href="https://github.com/katiefenn/website-2017-dist">built code</a> to <a href="https://pages.github.com/">GitHub Pages</a>. The built code is never committed to the source repository.</p>
+<p><a href="https://gist.github.com/domenic/ec8b0fc8ab45f39403dd">Dominic Denicola&#39;s article</a> explains the entire process for setting this up.</p>
+<h2 id="future-improvements">Future improvements</h2>
+<p>Some things that I hope to work on that can improve the site in the future:</p>
+<ul>
+<li>HTTPS support with <a href="https://letsencrypt.org/">Let&#39;s Encrypt</a></li>
+<li>HTTP2 support and private hosting with <a href="https://github.com/mholt/caddy">Caddy</a></li>
+</ul>
+<h2 id="in-summary">In Summary</h2>
+<p>Frontend tooling is steaming ahead at a breathtaking pace. It&#39;s easy to <a href="https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4#.907fj8lg6">become disillusioned</a> with the latest tools, and there have been times when I felt permanently left behind by the community.</p>
+<p>As tools like React have matured, the community have started filling in the blanks to make them more flexible for use outside of single page applications. Although there is still work to be done, I found React and Gulp to be great substitute for Jekyll. The process of writing custom Gulp plugins was not as accessible as I&#39;d hoped, and I would encourage the community to develop a stripped-down alternative API for creating plugins.</p>
+<p>The best thing about the project was taking ownership of every aspect of the site. I loved using Ghost and Jekyll in the past, but with so much happening &quot;under the hood&quot; there is a reduced incentive for customisation. The recent trend for creating numerous small modules does a lot to break down the walls of what would otherwise be an opaque box.</p>
+<p>I hope this trend continues, especially if it is matched by the community making tooling intuitive and accessible.</p>
+</article></div></div></body></html>
